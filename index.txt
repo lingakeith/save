@@ -1,0 +1,402 @@
+<head>
+    @*Modal popup script*@
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    @*Datepicker script*@
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    @*datatable script*@
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.js"></script>
+</head>
+<div class="container">
+    <a style="color: Blue" data-toggle="modal" id="addplayer" data-target="#myModal">
+        <h3>
+            Add Player</h3> 
+    </a>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label>
+                                Player Name</label>
+                        </div>
+                        <div class="col-sm-5">
+                            <input class="mandatory" type="text" id="Player" />
+                            
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label>
+                                DOB</label>
+                        </div>
+                        <div class="col-sm-5">
+                            <input type="text" id="DOB" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label>
+                                Gender</label>
+                        </div>
+                        <div class="col-sm-5">
+                            <input type="radio" name="gender" value="Male" id="male" />&nbsp; &nbsp; Male
+                            <input type="radio" name="gender" value="Female" id="female" />&nbsp; &nbsp; Female
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label>
+                                Rating</label>
+                        </div>
+                        <div class="col-sm-5">
+                            <form oninput="output1.value=slider.value">
+                            <input type="range" id="slider" step="10" min="0" max="100" value="0" />
+                            <output id="value" name="output1" for="slider">0</output>
+                            </form>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label>
+                                Check</label>
+                        </div>
+                        <div class="col-sm-5">
+                            @Html.CheckBox("status", new { @id = "status", @onclick = "" })
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="save">
+                        Save</button>
+                    <button type="button" class="btn btn-default" id="clear">
+                        Clear</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<button id="showdeleterecords" class="btn btn-danger">Deleted Records</button>
+<button id="showrecords" class="btn btn-success">Show Records</button>
+<br />
+<br />
+<div id="tbl1">
+    <table id="grid1" style="width: 100% ! important">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    DOB
+                </th>
+                <th>
+                    GENDER
+                </th>
+                <th>
+                    STATUS
+                </th>
+                <th>
+                    RATING
+                </th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<div id="tbl">
+    <table id="grid" style="width: 100% ! important">
+        <thead>
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    DELETE
+                </th>
+                <th>
+                    EDIT
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    DOB
+                </th>
+                <th>
+                    GENDER
+                </th>
+                <th>
+                    STATUS
+                </th>
+                <th>
+                    RATING
+                </th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<div class="modal fade" id="edit" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    &times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>
+                            Player Name</label>
+                    </div>
+                    <div class="col-sm-5">
+                        <input class="mandatory" type="text" id="Player1" />
+                        <input type="hidden" id="idhidden" />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>
+                            DOB</label>
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="text" id="DOB1" />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>
+                            Gender</label>
+                    </div>
+                    <div class="col-sm-5">
+                        <input type="radio" name="gender1" value="Male" id="male1" />&nbsp; &nbsp; Male
+                        <input type="radio" name="gender1" value="Female" id="female1" />&nbsp; &nbsp; Female
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>
+                            Rating</label>
+                    </div>
+                    <div class="col-sm-5">
+                        <form oninput="output1.value=slider.value">
+                        <input type="range" id="slider1" step="10" min="0" max="100" value="0" />
+                        <output id="value1" name="output1" for="slider">0</output>
+                        </form>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>
+                            Check</label>
+                    </div>
+                    <div class="col-sm-5">
+                        @Html.CheckBox("status", new { @id = "status1", @onclick = "" })
+                    </div>
+                </div>
+                <br />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="update">
+                    Update</button>
+                <button type="button" class="btn btn-default" id="clear">
+                    Clear</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $("#tbl1").hide();
+
+    $("#showdeleterecords").click(function () {
+        $("#tbl1").show();
+        $("#tbl").hide();
+        $("#addplayer").hide();
+        $("#showrecords").show();
+    });
+
+    $("#showrecords").click(function () {
+        $("#tbl").show();
+        $("#addplayer").show();
+        $("#tbl1").hide();
+    });
+
+
+
+    $(function () {
+        $("#DOB").datepicker();
+    });
+
+    $(document).ready(function () {
+        var a = $('#slider');
+        a.bind('click', function (e) {
+            e.preventDefault();
+            var userlimit = $("#value").val();
+        });
+    });
+    $("#save").click(function () {
+        var aa = $("#Player").val();
+        if (aa == "") {
+            alert("Enter Player Name")
+            $("#Player").focus();
+            return false;
+        }
+        var bb = $("#DOB").val();
+        var cc = $("input:radio[name='gender']:checked").val();
+        var dd = $("#value").val();
+        if ($("#status").attr("checked", true)) {
+            var ee = 1;
+        }
+        else {
+            var ee = 0;
+        }
+        $.ajax({
+            url: "../Default1/Save",
+            type: "post",
+            data: { aaa: aa, bbb: bb, ccc: cc, ddd: dd, eee: ee },
+            datatype: "json",
+            success: function (result) {
+                alert("Saved");
+                location.reload();
+            }
+        });
+    });
+    $("#grid").dataTable({
+        "bDestroy": true,
+        "bProcessing": true,
+        "iDisplayLength": 10,
+        "sAjaxSource": "../Default1/mygrid",
+        "aoColumns": [
+       { "sName": "", "bVisible": false },
+       { "sName": "", "mRender": function (oObj) {
+           return '<button class="btn btn-danger btn-xs delete" data-title="Delete" data-toggle="modal" data-target="#delete"><span class="glyphicon glyphicon-remove"></span></button>'
+       }
+       },
+       { "sName": "", "mRender": function (oObj) {
+           return '<button class="btn btn-primary btn-xs edit" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="glyphicon glyphicon-pencil"></span></button>'
+       }
+       },
+       { "sName": "" },
+       { "sName": "" },
+       { "sName": "" },
+       { "sName": "" },
+       { "sName": "" },
+           ]
+    });
+
+$("#grid1").dataTable({
+    "bDestroy": true,
+    "bProcessing": true,
+    "iDisplayLength": 10,
+    "sAjaxSource": "../Default1/mygrid1",
+    "aoColumns": [
+       { "sName": "" },
+       { "sName": "" },
+       { "sName": "" },
+       { "sName": "" },
+       { "sName": "" },
+           ]
+});
+
+    $("#grid tbody").on("click", ".edit", function () {
+
+        var nRow = $(this).parents('tr')[0];
+        var oTable = $('#grid').dataTable();
+        var iPos = oTable.fnGetPosition(nRow);
+        var aData = oTable.fnGetData(iPos);
+        var id0 = aData[0];
+        var id1 = aData[1];
+        var id2 = aData[2];
+        var id3 = aData[3];
+        var id4 = aData[4];
+        var id5 = aData[5];
+        var id6 = aData[6];
+        var id7 = aData[7];
+        $("#Player1").val(id3);
+        $("#idhidden").val(id2);
+        $("#DOB1").val(id4);
+      
+        if (id5 == 'Male') {
+            $("#male1").prop('checked', true);
+        }
+        else {
+            $("#female1").prop('checked', true);
+        }
+        if (id6 == 1) {
+            $("#status1").prop('checked', true);
+        }
+        else {
+            $("#status1").prop('checked', false);
+        }
+        $("#value1").val(id7);
+    });
+    $("#update").click(function () {
+        var aa = $("#Player1").val();
+        if (aa == "") {
+            alert("Enter Player Name")
+            $("#Player").focus();
+            return false;
+        }
+        var id= $("#idhidden").val();
+        var bb = $("#DOB1").val();
+        var cc = $("input:radio[name='gender1']:checked").val();
+        var dd = $("#value1").val();
+       
+        if ($("#status1").attr("checked", true)) {
+            var ee = 1;
+        }
+        else {
+            var ee = 0;
+        }
+        $.ajax({
+            url: "../Default1/Update",
+            type: "post",
+            data: { aaa: aa, bbb: bb, ccc: cc, ddd: dd, eee: ee, id: id },
+            datatype: "json",
+            success: function (result) {
+                alert("Update");
+                location.reload();
+            }
+        });
+    });
+    $("#grid tbody").on("click", ".delete", function () {
+        var nRow = $(this).parents('tr')[0];
+        var oTable = $('#grid').dataTable();
+        var iPos = oTable.fnGetPosition(nRow);
+        var aData = oTable.fnGetData(iPos);
+        var a = aData[2];
+        var newid = a;
+        $.ajax({
+            url: "../Default1/Delete",
+            Type: 'POST',
+            data: { id: newid },
+            success: function (event) {
+                alert("Deleted");
+                location.reload();
+            }
+        });
+    });
+</script>
