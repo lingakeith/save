@@ -1,0 +1,93 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace dssi.Models
+{
+    public class Class1
+    {
+        public Int64 id { get; set; }
+        public string name { get; set; }
+        public string gender { get; set; }
+        public Int64 slider { get; set; }
+        public Int64 check { get; set; }
+        public string dob { get; set; }
+
+    }
+}
+
+//CREATE PROCEDURE sp_dssisave (
+//    @name VARCHAR(250)
+//    ,@dob VARCHAR(500)
+//    ,@gender VARCHAR(250)
+//    ,@status BIGINT
+//    ,@check BIGINT
+//    ,@activeflag BIT
+//    )
+//AS
+//BEGIN
+//    INSERT INTO dssitable (
+//        NAME
+//        ,dob
+//        ,gender
+//        ,STATUS
+//        ,slider
+//        ,activeflag
+//        )
+//    VALUES (
+//        @name
+//        ,@dob
+//        ,@gender
+//        ,@status
+//        ,@check
+//        ,1
+//        )
+//END
+
+
+//CREATE PROCEDURE dssi_grid
+//AS
+//BEGIN
+//    SELECT *
+//    FROM dssitable
+//    WHERE activeflag = 1
+//END
+
+
+//CREATE PROCEDURE dssi_grid1
+//AS
+//BEGIN
+//    SELECT *
+//    FROM dssitable
+//    WHERE activeflag = 0
+//END
+
+
+//CREATE PROCEDURE sp_dssigridupdate (
+//    @id INT
+//    ,@name VARCHAR(250)
+//    ,@dob VARCHAR(500)
+//    ,@gender VARCHAR(250)
+//    ,@status BIGINT
+//    ,@check BIGINT
+//    )
+//AS
+//BEGIN
+//    UPDATE dssitable
+//    SET NAME = @name
+//        ,dob = @dob
+//        ,gender = @gender
+//        ,STATUS = @STATUS
+//        ,slider = @check
+//    WHERE id = @id
+//END
+
+
+//CREATE PROCEDURE sp_dssigriddelete (@id INT)
+//AS
+//BEGIN
+//    UPDATE dssitable
+//    SET activeflag = 0
+//    WHERE id = @id
+//END
