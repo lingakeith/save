@@ -1,0 +1,90 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using System.Data;
+using System.Data.SqlClient;
+using WebApplication2.Models;
+
+namespace WebApplication2.Controllers
+{
+    public class HomeController : Controller
+    {
+        string connection = "Data Source=WEB-SERVER\\SQLEXPRESS;Initial Catalog=Freshers;User ID=fresher;password=fresher";
+        SqlConnection con;
+        SqlCommand cmd;
+
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult About()
+        {
+            ViewBag.Message = "Your application description page.";
+
+            return View();
+        }
+
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+
+        public ActionResult grid()
+        {
+            var table = maingrid();
+            var result = from c in table select new[] {"","",c.id.ToString(),c.name,c.gender,c.dob,c.slider.ToString(), c.check.ToString() };
+            return Json(new { aaData = result }, JsonRequestBehavior.AllowGet);
+        }
+        public List<Class1> maingrid()
+        {
+            List<Class1> s = new List<Class1>();
+            SqlDataReader dr;
+            using (con = new SqlConnection(connection))
+            {
+                con.Open();
+                cmd = con.CreateCommand();
+                using (cmd = new SqlCommand("dssimaingrid", con))
+                {
+                    dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        Class1 a = new Class1();
+                        a.id = Convert.ToInt64(dr["Id"]);
+                        a.name = Convert.ToString(dr["name"]);
+                        a.gender = Convert.ToString(dr["Gender"]);
+                        a.dob = Convert.ToString(dr["dob"]);
+                        a.check = Convert.ToInt64(dr["checkbox"]);
+                        a.slider = Convert.ToInt64(dr["Slider"]);
+                        s.Add(a);
+                    }
+                    return s;
+                }
+            }
+        }
+        public string save(string name, string gender, string dob, int check, int slider)
+        {
+            using(con=new SqlConnection(connection))
+            {
+                con.Open();
+                cmd = con.CreateCommand();
+                using (cmd = new SqlCommand("dssisave12", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new SqlParameter("Name", name));
+                    cmd.Parameters.Add(new SqlParameter("Gender", gender));
+                    cmd.Parameters.Add(new SqlParameter("dob", dob));
+                    cmd.Parameters.Add(new SqlParameter("Checkbox", check));
+                    cmd.Parameters.Add(new SqlParameter("Slider", slider));
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            return "";
+        }
+
+    }
+}
